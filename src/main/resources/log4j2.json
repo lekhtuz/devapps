@@ -1,0 +1,47 @@
+{
+  "configuration" : {
+    "name" : "Default"
+    , "properties" : {
+      "property" : {
+        "name" : "logging_dir"
+        , "value" : "${env:LOGGING_DIR}"
+      }
+      , "property" : {
+        "name" : "app_name"
+        , "value" : "devapps"
+      }
+    }, "appenders" : {
+      "RollingFile" : {
+        "name" : "RollingFile"
+      , "fileName" : "${logging_dir}/${app_name}-rolling.log"
+      , "filePattern" : "${logging_dir}/${app_name}-rolling-%d{MM-dd-yy-HH-mm-ss}-%i.log"
+      , "PatternLayout" : {
+          "pattern" : "%d{dd HH:mm:ss,SSS} %-5level %logger{1.} - %msg%n"
+        } , "Policies" : {
+          "SizeBasedTriggeringPolicy" : { "size" : "20 MB" }
+        }
+      , "DefaultRolloverStrategy" : { "max" : 10 }
+      }, "File" : {
+        "name" : "File"
+      , "fileName" : "${logging_dir}/${app_name}.log"
+      , "append" : false
+      , "PatternLayout" : {
+          "pattern" : "%d{dd HH:mm:ss,SSS} %-5level %logger{1.} - %msg%n"
+        }
+      }, "Console" : {
+        "name" : "Stdout"
+      , "PatternLayout" : {
+          "pattern" : "%d{dd HH:mm:ss,SSS} %-5level %logger{1.} - %msg%n"
+        }
+      }
+    }, "loggers" : {
+      "root" : {
+        "level" : "debug"
+      , "AppenderRef" : [
+          { "ref" : "Stdout" },
+          { "ref" : "File" }
+        ]
+      }
+    }
+  }
+}
