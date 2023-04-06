@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.core.util.IOUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
@@ -25,7 +26,7 @@ import reactor.core.publisher.Mono;
 @Log4j2
 public class EchoController extends AbstractController {
 
-	@RequestMapping
+	@GetMapping
 	public Mono<EchoResponse> echo(final ServerWebExchange exchange) throws Exception {
 		final String _M = "echo(HttpRequest):";
 		log.info("{} started. exchange = {}", _M, exchange);

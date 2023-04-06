@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class ResourceController extends AbstractController {
 	 * @param exchange
 	 * @return
 	 */
-	@RequestMapping
+	@GetMapping
 	Mono<ResourceResponse> resource(final ServerWebExchange exchange) {
 		final String _M = "resource(ServerWebExchange):";
 		log.info("{} started. exchange = {}", _M, exchange);
