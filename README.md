@@ -15,7 +15,7 @@ curl -v http://localhost:8080/echo
 docker build --tag=devapps:latest .
 docker run -p 8080:8080 devapps:latest
 ```
-# Commands with Docker (fails with permission denied)
+# Commands with Docker
 ```
 mvn clean spring-boot:build-image
 ```
