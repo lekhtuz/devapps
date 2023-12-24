@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Upload QIF file</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+
+	<body>
+		<form id="uploadForm" method="post" th:action="@{/qif}" enctype="multipart/form-data">
+			<input id="input-file" type="file" name="file">
+			<button class="btn btn-sm btn-outline-success float-right" type="submit">Upload</button>
+		</form>
+	</body>
+</html>

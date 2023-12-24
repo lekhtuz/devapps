@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j2;
  *
  */
 @Log4j2
-public class AbstractController {
+public abstract class AbstractController {
 
 	/**
 	 * @param request
@@ -47,6 +47,6 @@ public class AbstractController {
 	 * @param consumer
 	 */
 	private <T>void consumeMultiValueMap(final Map<String, List<T>> map, BiConsumer<String, T> consumer) {
-		map.forEach((key, list) -> list.forEach(str -> consumer.accept(key, str)));
+		map.forEach((key, list) -> list.forEach(value -> consumer.accept(key, value)));
 	}
 }

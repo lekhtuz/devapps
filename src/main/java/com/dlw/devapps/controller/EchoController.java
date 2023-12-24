@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.core.util.IOUtils;
+
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,11 @@ import reactor.core.publisher.Mono;
 @Log4j2
 public class EchoController extends AbstractController {
 
+	/**
+	 * @param exchange
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping
 	public Mono<EchoResponse> echo(final ServerWebExchange exchange) throws Exception {
 		final String _M = "echo(HttpRequest):";
@@ -39,16 +46,19 @@ public class EchoController extends AbstractController {
 				.map(ld -> EchoResponse.builder()
 						.success(true)
 						.lines(ld.stream()
-								.map(db -> {
+								.map(DataBuffer::asInputStream)
+								.map(InputStreamReader::new)
+								.map(BufferedReader::new)
+								.map(reader -> {
 									try {
-										return IOUtils.toString(new BufferedReader(new InputStreamReader(db.asInputStream())));
+										return IOUtils.toString(reader);
 									} catch (IOException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
 									return("");
 								})
-								.collect(Collectors.toList()))
+								.toList())
 						.build());
 	}
 }

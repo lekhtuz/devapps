@@ -37,7 +37,7 @@ public class ResourceController extends AbstractController {
 	 * @return
 	 */
 	@GetMapping
-	Mono<ResourceResponse> resource(final ServerWebExchange exchange) {
+	public Mono<ResourceResponse> resource(final ServerWebExchange exchange) {
 		final String _M = "resource(ServerWebExchange):";
 		log.info("{} started. exchange = {}", _M, exchange);
 		log.info("{} attributes = {}", _M, exchange.getAttributes());
@@ -70,8 +70,7 @@ public class ResourceController extends AbstractController {
 	 */
 	@ExceptionHandler(InvalidTokenException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
-	public InvalidTokenResponse handleTokenExpiredException(final InvalidTokenException e,
-			final ServerWebExchange exchange) {
+	public InvalidTokenResponse handleTokenExpiredException(final InvalidTokenException e, final ServerWebExchange exchange) {
 		final String _M = "handleTokenExpiredException(): ";
 		log.info("{} called.", _M, e);
 

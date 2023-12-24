@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dlw.devapps.config.AppProperties;
+import com.dlw.devapps.domain.InvalidTokenException;
 import com.dlw.devapps.domain.OauthTokenRequest;
 import com.dlw.devapps.domain.OauthTokenResponse;
-import com.dlw.devapps.domain.InvalidTokenException;
+
+import com.google.common.collect.Maps;
 
 import lombok.Builder;
 import lombok.Data;
@@ -25,25 +27,25 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class TokenServiceImpl implements TokenService {
 	@Autowired private AppProperties props;
-	private Map<String, TokenInfo> tokenStore = new HashMap<>();
+	private Map<String, TokenInfo> tokenStore = Maps.newHashMap();
 
 	/* (non-Javadoc)
 	 * @see com.dlw.devapps.service.TokenService#getToken(com.dlw.devapps.domain.OauthTokenRequest)
 	 */
 	@Override
-	public OauthTokenResponse getToken(OauthTokenRequest request) {
+	public OauthTokenResponse getToken(final OauthTokenRequest request) {
 		final String _M = "getToken(OauthTokenRequest):";
 		log.info("{} started. request = {}", _M, request);
 		
 		String newToken = UUID.randomUUID().toString();
 
-		OauthTokenResponse response = OauthTokenResponse.builder()
+		final OauthTokenResponse response = OauthTokenResponse.builder()
 				.accessToken(newToken)
 				.tokenType(props.getTokenType())
 				.expiresIn(props.getTokenTtl().toSeconds())
 				.build();
 
-		LocalDateTime now = LocalDateTime.now();
+		final LocalDateTime now = LocalDateTime.now();
 		tokenStore.put(newToken, TokenInfo.builder()
 				.generated(now)
 				.expiration(now.plus(props.getTokenTtl()))
@@ -68,6 +70,10 @@ public class TokenServiceImpl implements TokenService {
 		}
 	}
 
+	/**
+	 * @author Dmitry Lekhtuz
+	 * 
+	 */
 	@Data
 	@Builder
 	private static class TokenInfo {

@@ -13,11 +13,11 @@ public interface TokenService {
 	 * @param request
 	 * @return
 	 */
-	public OauthTokenResponse getToken(OauthTokenRequest request);
+	public OauthTokenResponse getToken(final OauthTokenRequest request);
 
 	/**
 	 * @param token
 	 * @return
 	 */
-	public void validateToken(String token) throws InvalidTokenException;
+	public void validateToken(final String token) throws InvalidTokenException;
 }
