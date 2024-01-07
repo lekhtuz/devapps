@@ -1,10 +1,9 @@
 package com.dlw.devapps.controller;
 
-import java.util.List;
-import java.util.Map;
 import java.util.function.BiConsumer;
 
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.util.MultiValueMap;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -46,7 +45,7 @@ public abstract class AbstractController {
 	 * @param map
 	 * @param consumer
 	 */
-	private <T>void consumeMultiValueMap(final Map<String, List<T>> map, BiConsumer<String, T> consumer) {
+	private <T>void consumeMultiValueMap(final MultiValueMap<String, T> map, BiConsumer<String, T> consumer) {
 		map.forEach((key, list) -> list.forEach(value -> consumer.accept(key, value)));
 	}
 }

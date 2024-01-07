@@ -11,11 +11,19 @@
 
 	<body>
 		<div class="container">
-			<form id="uploadForm" method="post" th:action="@{/qif}" enctype="multipart/form-data">
-				<label for="input-file" class="form-label">QIF file:</label>
-				<input id="input-file" type="file" name="file">
-				<button class="btn btn-sm btn-success float-right" type="submit">Upload</button>
-			</form>
+			Number of accounts: <span th:text="${accounts.size()}"/>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Account Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr scope="row" th:each="account:${accounts}">
+						<td><span th:text="${account}"></span></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</body>
 </html>
